@@ -1,0 +1,8 @@
+{
+  "appId": "com.KVSRC.app",
+  "appName": "KVS-RC-Actor-state-migration-viewer",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}

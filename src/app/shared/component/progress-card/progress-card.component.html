@@ -1,0 +1,288 @@
+<div class="" style="color: white;">
+
+
+
+
+  <div *ngIf="hasPartitionID; else elseBlock">
+    <!-- if partition id is provided in url -->
+    <div class="" *ngFor="let app of AllMigEndpoints">
+      <div class="" *ngFor="let service of app.service_details">
+        <div class="" *ngFor="let partition of service.partition_details;">
+          <div class=""
+            *ngIf="app.app_id == applicationID && service.service_id == serviceID && partition.partition_id == partitionID">
+            <div class="progress-card">
+              <div class="row1">
+                <div class="column">
+                  <div class="arrows">
+                    <div class="arrow"
+                      [ngClass]="{'ongoing': partition.progress[0] == 'ongoing', 'completed': partition.progress[0] == 'completed', 'error': partition.progress[0] == 'error', 'idle': partition.progress[0] == 'idle' }">
+                      <div class="button"
+                        (click)="showOverallProgress = false; showCopyProgress=true; showCatchupProgress = false; showDowntimeProgress=false">
+                        <p><span class="hovertext" data-hover="Show copy phase details">Copy</span></p>
+                      </div>
+                    </div>
+                    <div class="button"
+                      (click)="showOverallProgress = false; showCatchupProgress=true; showCopyProgress=false; showDowntimeProgress=false">
+                      <div class="arrow"
+                        [ngClass]="{'ongoing': partition.progress[1] == 'ongoing', 'completed': partition.progress[1] == 'completed', 'error': partition.progress[1] == 'error', 'idle': partition.progress[1] == 'idle' }">
+                        <span class="hovertext" data-hover="Show Catchup phase details">Catchup</span>
+                      </div>
+                    </div>
+                    <div class="button"
+                      (click)="showOverallProgress = false; showDowntimeProgress=true; showCopyProgress=false; showCatchupProgress = false">
+                      <div class="arrow"
+                        [ngClass]="{'ongoing': partition.progress[2] == 'ongoing', 'completed': partition.progress[2] == 'completed', 'error': partition.progress[2] == 'error', 'idle': partition.progress[2] == 'idle' }">
+                        <span class="hovertext" data-hover="Show Dwontime phase details">Downtime</span>
+                      </div>
+                    </div>
+
+                    <div class="button"
+                      (click)="showOverallProgress = true; showCopyProgress=false; showCatchupProgress = false; showDowntimeProgress=false">
+                      <div class="arrow"
+                        [ngClass]="{'ongoing-end': partition.progress[3] == 'ongoing', 'completed-end': partition.progress[3] == 'completed', 'error-end': partition.progress[3] == 'error', 'idle-end': partition.progress[3] =='idle' }">
+                        <span class="hovertext" data-hover="Show overall details">Completed</span>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div *ngIf="showStart" class="text-center"><button type="button"
+                      class="progress-card-button btn btn-info ">Start
+                      Migration</button> </div>
+
+                </div>
+                <div class="column" style="color:white;">
+                  <p class="title"> <b>Partition {{partition.partition_id}}</b></p>
+                  <div class="progress1-text">
+
+                    <div class="overall-progress" *ngIf="showOverallProgress">
+                      <p class="small-text">Overall Progress</p>
+                      <p><b>start time:</b> {{partition.migration_details.startDateTimeUTC}}</p>
+                      <p><b>end time: </b>{{partition.migration_details.endDateTimeUTC}}</p>
+                      <p><b>start seq number: </b>{{partition.migration_details.startSeqNum}}</p>
+                      <p><b>end seq number: </b>{{partition.migration_details.endSeqNum}}</p>
+                      <p><b>last applied seq no.:</b> {{partition.migration_details.lastAppliedSeqNum}}</p>
+                      <p><b>no. of keys migrated:</b> {{partition.migration_details.noOfKeysMigrated}}</p>
+
+                    </div>
+                    <div class="copy-progress" *ngIf="showCopyProgress">
+                      <p class="small-text">Copy Progress</p>
+                      <p><b>start time:</b> {{partition.migration_details.phaseResults[0].startDateTimeUTC}}</p>
+                      <p><b>end time: </b>{{partition.migration_details.phaseResults[0].endDateTimeUTC}}</p>
+                      <p><b>start seq number: </b>{{partition.migration_details.phaseResults[0].startSeqNum}}</p>
+                      <p><b>end seq number: </b>{{partition.migration_details.phaseResults[0].endSeqNum}}</p>
+                      <p><b>last applied seq no.:</b> {{partition.migration_details.phaseResults[0].lastAppliedSeqNum}}
+                      </p>
+                      <p><b>no. of keys migrated:</b> {{partition.migration_details.phaseResults[0].noOfKeysMigrated}}
+                      </p>
+                      <p><b>worker count: </b>{{partition.migration_details.phaseResults[0].workerCount}}</p>
+                    </div>
+                    <div class="catchup-progress" *ngIf="showCatchupProgress">
+                      <p class="small-text">Catchup Progress</p>
+                      <p><b>start time:</b> {{partition.migration_details.phaseResults[1].startDateTimeUTC}}</p>
+                      <p><b>end time: </b>{{partition.migration_details.phaseResults[1].endDateTimeUTC}}</p>
+                      <p><b>start seq number: </b>{{partition.migration_details.phaseResults[1].startSeqNum}}</p>
+                      <p><b>end seq number: </b>{{partition.migration_details.phaseResults[1].endSeqNum}}</p>
+                      <p><b>last applied seq no.:</b> {{partition.migration_details.phaseResults[1].lastAppliedSeqNum}}
+                      </p>
+                      <p><b>no. of keys migrated:</b> {{partition.migration_details.phaseResults[1].noOfKeysMigrated}}
+                      </p>
+                      <p><b>worker count: </b>{{partition.migration_details.phaseResults[1].workerCount}}</p>
+                    </div>
+                    <div class="downtime-progress" *ngIf="showDowntimeProgress">
+                      <p class="small-text">Downtime Progress</p>
+                      <p><b>start time:</b> {{partition.migration_details.phaseResults[2].startDateTimeUTC}}</p>
+                      <p><b>end time: </b>{{partition.migration_details.phaseResults[2].endDateTimeUTC}}</p>
+                      <p><b>start seq number: </b>{{partition.migration_details.phaseResults[2].startSeqNum}}</p>
+                      <p><b>end seq number: </b>{{partition.migration_details.phaseResults[2].endSeqNum}}</p>
+                      <p><b>last applied seq no.:</b> {{partition.migration_details.phaseResults[2].lastAppliedSeqNum}}
+                      </p>
+                      <p><b>no. of keys migrated:</b> {{partition.migration_details.phaseResults[2].noOfKeysMigrated}}
+                      </p>
+                      <p><b>worker count: </b>{{partition.migration_details.phaseResults[2].workerCount}}</p>
+                    </div>
+
+                  </div>
+
+
+                  <div class="progress1-button" style="color: white;">
+                    <div *ngIf="modeOfMigration(app.app_id, service.service_id, partition.partition_id)"><button
+                        type="button" class="btn btn-info " (click)="InvokeDowntime()">Invoke Downtime</button>
+                      <p> </p>
+                    </div>
+                    <div *ngIf="showAbort"><button type="button" class="progress-card-button btn btn-info "
+                        (click)="AbortMigration()">Abort</button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <ng-template #elseBlock>
+    <div class="" *ngFor="let app of AllMigEndpoints">
+      <div class="" *ngFor="let service of app.service_details">
+        <div class="" *ngIf="app.app_id == applicationID && service.service_id == serviceID ">
+
+          <div class="list-partitions" *ngIf="modeOfMigrationManual(app.app_id, service.service_id)">
+            <div class="" style="display: inline-block;">
+              <p class="title" style="text-decoration:underline; font-weight: 550;"> List of Partitions: </p>
+              <button class="collapse-button" (click)="toggleList()">
+                <mat-icon>arrow_drop_down</mat-icon>
+              </button>
+            </div>
+            <div class="partitions" *ngIf="showPartitions">
+              <div class="" *ngFor="let partition of service.partition_details;">
+                <label>
+                  <input type="checkbox" value="{{partition.partition_id}}"
+                    [checked]="isCheckedPartition(app.app_id, service.service_id, partition.partition_id)"
+                    (change)="checkSelectedPartitions(app.app_id, service.service_id, partition.partition_id)" />
+                  {{partition.partition_id}}
+                </label>
+              </div>
+              <div class="text-center pt-3">
+                <button type="button" class="progress-card-button btn btn-info " style="width: 25%; margin: 4px;">Select
+                  All Partitions</button>
+                <button type="button" class="progress-card-button btn btn-info " style="width: 40%; margin: 4px;">Start
+                  Migration</button>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+          <div class="" *ngFor="let partition of service.partition_details;">
+            <div class="" *ngIf="partition.selected">
+
+              <div class="progress-card">
+                <div class="row1">
+                  <div class="column">
+                    <div class="arrows">
+                      <div class="arrow"
+                        [ngClass]="{'ongoing': partition.progress[0] == 'ongoing', 'completed': partition.progress[0] == 'completed', 'error': partition.progress[0] == 'error', 'idle': partition.progress[0] == 'idle' }">
+                        <div class="button"
+                          (click)="showOverallProgress = false; showCopyProgress=true; showCatchupProgress = false; showDowntimeProgress=false">
+                          <p><span class="hovertext" data-hover="Show copy phase details">Copy</span></p>
+                        </div>
+                      </div>
+                      <div class="button"
+                        (click)="showOverallProgress = false; showCatchupProgress=true; showCopyProgress=false; showDowntimeProgress=false">
+                        <div class="arrow"
+                          [ngClass]="{'ongoing': partition.progress[1] == 'ongoing', 'completed': partition.progress[1] == 'completed', 'error': partition.progress[1] == 'error', 'idle': partition.progress[1] == 'idle' }">
+                          <span class="hovertext" data-hover="Show Catchup phase details">Catchup</span>
+                        </div>
+                      </div>
+                      <div class="button"
+                        (click)="showOverallProgress = false; showDowntimeProgress=true; showCopyProgress=false; showCatchupProgress = false">
+                        <div class="arrow"
+                          [ngClass]="{'ongoing': partition.progress[2] == 'ongoing', 'completed': partition.progress[2] == 'completed', 'error': partition.progress[2] == 'error', 'idle': partition.progress[2] == 'idle' }">
+                          <span class="hovertext" data-hover="Show Dwontime phase details">Downtime</span>
+                        </div>
+                      </div>
+
+                      <div class="button"
+                        (click)="showOverallProgress = true; showCopyProgress=false; showCatchupProgress = false; showDowntimeProgress=false">
+                        <div class="arrow"
+                          [ngClass]="{'ongoing-end': partition.progress[3] == 'ongoing', 'completed-end': partition.progress[3] == 'completed', 'error-end': partition.progress[3] == 'error', 'idle-end': partition.progress[3] =='idle' }">
+                          <span class="hovertext" data-hover="Show overall details">Completed</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="ShowStart(app.app_id, service.service_id, partition.partition_id)" class="text-center">
+                      <button type="button" class="progress-card-button btn btn-info ">Start Migration</button>
+                    </div>
+
+                  </div>
+                  <div class="column" style="color:white;">
+                    <p class="title"> <b>Partition {{partition.partition_id}}</b></p>
+                    <div class="progress1-text">
+
+                      <div class="overall-progress" *ngIf="showOverallProgress">
+                        <p class="small-text">Overall Progress</p>
+                        <p><b>start time:</b> {{partition.migration_details.startDateTimeUTC}}</p>
+                        <p><b>end time: </b>{{partition.migration_details.endDateTimeUTC}}</p>
+                        <p><b>start seq number: </b>{{partition.migration_details.startSeqNum}}</p>
+                        <p><b>end seq number: </b>{{partition.migration_details.endSeqNum}}</p>
+                        <p><b>last applied seq no.:</b> {{partition.migration_details.lastAppliedSeqNum}}</p>
+                        <p><b>no. of keys migrated:</b> {{partition.migration_details.noOfKeysMigrated}}</p>
+                      </div>
+                      <div class="copy-progress" *ngIf="showCopyProgress">
+                        <p class="small-text">Copy Progress</p>
+                        <p><b>start time:</b> {{partition.migration_details.phaseResults[0].startDateTimeUTC}}</p>
+                        <p><b>end time: </b>{{partition.migration_details.phaseResults[0].endDateTimeUTC}}</p>
+                        <p><b>start seq number: </b>{{partition.migration_details.phaseResults[0].startSeqNum}}</p>
+                        <p><b>end seq number: </b>{{partition.migration_details.phaseResults[0].endSeqNum}}</p>
+                        <p><b>last applied seq no.:</b>
+                          {{partition.migration_details.phaseResults[0].lastAppliedSeqNum}}
+                        </p>
+                        <p><b>no. of keys migrated:</b>
+                          {{partition.migration_details.phaseResults[0].noOfKeysMigrated}}
+                        </p>
+                        <p><b>worker count: </b>{{partition.migration_details.phaseResults[0].workerCount}}</p>
+                      </div>
+                      <div class="catchup-progress" *ngIf="showCatchupProgress">
+                        <p class="small-text">Catchup Progress</p>
+                        <p><b>start time:</b> {{partition.migration_details.phaseResults[1].startDateTimeUTC}}</p>
+                        <p><b>end time: </b>{{partition.migration_details.phaseResults[1].endDateTimeUTC}}</p>
+                        <p><b>start seq number: </b>{{partition.migration_details.phaseResults[1].startSeqNum}}</p>
+                        <p><b>end seq number: </b>{{partition.migration_details.phaseResults[1].endSeqNum}}</p>
+                        <p><b>last applied seq no.:</b>
+                          {{partition.migration_details.phaseResults[1].lastAppliedSeqNum}}
+                        </p>
+                        <p><b>no. of keys migrated:</b>
+                          {{partition.migration_details.phaseResults[1].noOfKeysMigrated}}
+                        </p>
+                        <p><b>worker count: </b>{{partition.migration_details.phaseResults[1].workerCount}}</p>
+                      </div>
+                      <div class="downtime-progress" *ngIf="showDowntimeProgress">
+                        <p class="small-text">Downtime Progress</p>
+                        <p><b>start time:</b> {{partition.migration_details.phaseResults[2].startDateTimeUTC}}</p>
+                        <p><b>end time: </b>{{partition.migration_details.phaseResults[2].endDateTimeUTC}}</p>
+                        <p><b>start seq number: </b>{{partition.migration_details.phaseResults[2].startSeqNum}}</p>
+                        <p><b>end seq number: </b>{{partition.migration_details.phaseResults[2].endSeqNum}}</p>
+                        <p><b>last applied seq no.:</b>
+                          {{partition.migration_details.phaseResults[2].lastAppliedSeqNum}}
+                        </p>
+                        <p><b>no. of keys migrated:</b>
+                          {{partition.migration_details.phaseResults[2].noOfKeysMigrated}}
+                        </p>
+                        <p><b>worker count: </b>{{partition.migration_details.phaseResults[2].workerCount}}</p>
+                      </div>
+
+                    </div>
+
+
+                    <div class="progress1-button" style="color: white;">
+                      <div *ngIf="modeOfMigration(app.app_id, service.service_id, partition.partition_id)"><button
+                          type="button" class="progress-card-button btn btn-info ">Invoke Downtime</button>
+                        <p> </p>
+                      </div>
+                      <div *ngIf="ShowAbort(app.app_id, service.service_id, partition.partition_id)"><button
+                          type="button" class="progress-card-button btn btn-info "
+                          (click)="AbortMigration()">Abort</button></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+
+  </ng-template>
+</div>

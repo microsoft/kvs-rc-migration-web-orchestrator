@@ -1,0 +1,61 @@
+.login-body{
+    background-color:rgb(92, 92, 92);
+    margin: 0;
+    padding: 2rem;
+    position: relative;
+    width: -webkit-fill-available;
+    display: flex;
+    min-height: 80;
+    width: 100%;
+    max-height: 100%;
+    
+}
+
+.login-form{
+	height:80%;
+    width: 30%;
+	background: #eee;
+    margin: auto;
+    border-radius: 0.8rem;
+    text-align: center;
+    color: white;
+    background: rgba(52, 50, 50, 0.781);
+    box-shadow: 10px black; 
+    padding-top: 0;
+    min-width: 300px;
+    box-shadow: var(--heavy-box-shadow);
+
+
+}
+.login-form input{
+    font-size: 14px;
+    position: relative;
+    padding: 1.2rem;
+    margin: 1.2rem;
+    border-radius: 0.8rem;
+    border:0.5;
+    width: 70%;
+}
+
+.login-form button{
+    padding: 1rem;
+    margin: 1.2rem;
+    width: 75%;
+    border-radius: 0.8rem;
+}
+
+
+.center-span{
+    text-align: center;
+}
+
+.card-header{
+    background: var(--primary-background-color);
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
+    padding: 1.2rem;
+    color: #eee;
+    font-weight: 600;
+
+
+}

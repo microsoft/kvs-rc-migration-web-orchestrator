@@ -1,0 +1,36 @@
+
+<div class="services">
+    <span style="vertical-align: middle; margin-left: 15px; font-size: larger; font-weight: 600;">Select your RC service to migrate:</span>
+
+    <div class="form-group">
+        <ul class="list-group list-group-flush">
+            <hr>
+    
+            <li class="list-group-item" *ngFor="let app of allMigrationListener; index as i;">
+    
+                <p class="title" style="font-size: 16px; font-weight: 550; text-decoration: underline;">{{app.app_name}}</p>
+                <div *ngFor="let service of app.service_details" class="service-list">
+
+                        <div class="" *ngIf="hasListener(app.app_id, service.service_id)">
+                            <label>
+                                <input type="checkbox" value="{{service.service_name}}"
+                                    [checked]="isCheckedService(app.app_id, service.service_id)"
+                                    (click)="checkSelectedServices(app.app_id, service.service_id)" 
+                                    
+                                    />
+                                    {{service.service_name}}
+                            </label>
+                            
+                        </div>
+                    </div>
+                <hr>
+            </li>
+        </ul>
+        <div class="progress1-button" style="color: white;">
+            <div ><button type="button" class="btn btn-info " [routerLink]="['/migration']">Continue</button></div>
+        </div>
+        
+    </div>
+
+ 
+</div>

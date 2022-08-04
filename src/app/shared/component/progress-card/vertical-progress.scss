@@ -1,0 +1,218 @@
+@import "node_modules/progress-tracker/src/styles/progress-tracker.scss";
+
+.progress-step.is-complete .progress-marker::after, .progress-step.is-progress .progress-marker::after{
+  background-color: wheat;
+}
+
+.arrows{
+  margin-left: 0;
+  font-size: small;
+
+}
+
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  padding-left: 0;
+}
+
+/* Clear floats after the columns */
+.row1:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+
+
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+
+
+
+@mixin css-arrow($height: 10px, $border: 2px, $color:  #fff, $border-color: #999, $direction: bottom, $outside: true) {
+    $border-shift: $border;
+    
+    @if $border > 0px {
+      $border: round($border * 1.41421356);
+    }
+    
+    position: relative;
+    
+    &:after,
+    &:before {
+      border: solid transparent;
+      content: " ";
+      display: block;
+      height: 0;
+      position: absolute;
+      pointer-events: none;
+      width: 0;
+      
+      @if $direction == top {
+        @if $outside {
+          bottom: 100%;
+        }
+        @else {
+          margin-top: -$border-shift;
+          top: 0;
+        }
+      }
+      
+      @if $direction == bottom {
+        @if $outside {
+          top: 100%;
+        }
+        @else {
+          bottom: 0; 
+          margin-bottom: -$border-shift;  
+        }
+      }
+      
+    }
+  
+    &:after {
+      border-color: rgba(255, 255, 255, 0);
+      @if $direction == top {
+        @if $outside {
+          border-bottom-color: $color;
+        }
+        @else {
+          border-top-color: $color;
+        }
+      }
+      
+      @if $direction == bottom {
+        @if $outside {
+          border-top-color: $color;
+        }
+        @else {
+          border-bottom-color: $color;
+        }
+      }
+      
+      
+      @if $direction == top or $direction == bottom {
+        left: 50%;
+        margin-left: -$height;
+      }
+      
+      
+      
+      border-width: $height;
+    }
+  
+    &:before {
+      border-color: rgba(255, 255, 255, 0);
+      @if $direction == top {
+        @if $outside {
+          border-bottom-color: $border-color;
+        }
+        @else {
+          border-top-color: $border-color;
+        }
+      }
+     
+      @if $direction == bottom {
+        @if $outside {
+          border-top-color: $border-color;
+        }
+        @else {
+          border-bottom-color: $border-color;
+        }
+      }
+      
+      @if $direction == top or $direction == bottom {
+        left: 50%;
+        margin-left: -($height + $border);
+      }
+     
+      border-width: $height + $border;
+    }
+  }
+  
+  // Variables
+  $background: grey; //outer arrow color
+  $border-color:  var(--accent-background-color); //border-color
+  $border-size: 2px;
+    
+  .arrow {
+    color: white;
+    border: $border-size solid $border-color;
+    border-radius: 4px;
+    background: $background;
+	  background-color: $background;
+    margin: 0 auto 13px;
+    padding: 12px;
+    text-align: center;
+    width: 140px;
+  }
+
+
+
+
+
+  .ongoing{
+    $background: var(--ongoing);
+    background: var(--ongoing);
+    color: black;
+    @include css-arrow(10px, $border-size, $background, $border-color, bottom);
+  }
+
+  .completed{
+    $background: var(--completed);
+    background: var(--completed);
+    @include css-arrow(10px, $border-size, $background, $border-color, bottom);
+
+  }
+
+  .error{
+    $background: var(--error);
+    background: var(--error);
+    @include css-arrow(10px, $border-size, $background, $border-color, bottom);
+  }
+
+  .ongoing-end{
+    $background: var(--ongoing);
+    background: var(--ongoing);
+    color: black;
+    @include css-arrow(10px, $border-size, var(--accent-background-color), $border-color, top, false);
+
+  }
+
+  .completed-end{
+    $background: var(--completed);
+    background: var(--completed);
+    @include css-arrow(10px, $border-size, var(--accent-background-color), $border-color, top, false);
+
+
+  }
+
+  .error-end{
+    $background: var(--error);
+    background: var(--error);
+    @include css-arrow(10px, $border-size, var(--accent-background-color), $border-color, top, false);
+
+  }
+
+  .idle-end{
+    $background: var(--idle);
+    background: var(--idle);
+    @include css-arrow(10px, $border-size, var(--accent-background-color), $border-color, top, false);
+  }
+
+  .idle{
+    $background: var(--idle);
+    background: var(--idle);
+    @include css-arrow(10px, $border-size, $background, $border-color, bottom);
+  }
