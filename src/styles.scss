@@ -1,0 +1,63 @@
+@use '@angular/cdk';
+@use './Styles/var';
+@use '@angular/material' as mat;
+// For more information: https://material.angular.io/guide/theming
+@import '@angular/material/theming';
+// @import './Styles/detail';
+// @import './Styles/config';
+// @import './Styles/dashboard';
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+
+label {
+  margin-bottom: 0px;
+}
+
+body {
+  overflow: auto;
+  background-color: var(--accent-background-color);
+  margin: 0;
+  font-family: "Segoe UI",-apple-system,"Helvetica Neue","Lucida Grande",Trebuchet,Arial,sans-serif;
+  font-size: var(--font-size-default);
+  line-height: 1.42857;
+  color: var(--font-primary-color);
+    margin: 0;
+  padding: 0;
+  max-width: 100%;
+  background-color: var(--primary-background-color) !important;
+}
+html,body {
+  height: 100%;
+  min-height: 100vh;
+}
+
+.detail-pane {
+  display: block;
+  margin-bottom: 15px;
+
+  h4, h2 {
+      color: var(--font-accent-color);
+      margin-left: 0;
+      font-size: var(--font-size-large);
+      margin-top: 0;
+      padding-top: 0px;
+      margin-bottom: 0px;
+  }
+
+  h4.no-uppercase {
+      text-transform: none;
+  }
+
+  pre {
+      color: var(--font-accent-color); //TODO check
+      background-color: var(--primary-background-color);
+      border-width: 0;
+      margin: 0;
+  }
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
