@@ -294,17 +294,18 @@ export class ProgressCardComponent {
   }
   ShowInvokeDowntime(migrationList: string){
     this.f = false;
-    if(typeof(migrationList) !== 'undefined'){
-    return this.migrationListenerService.FetchMigrationProgress(migrationList).subscribe(
-      resp => {
-        var migration_details: MigrationProgressModel = resp;
-        if(migration_details.phaseResults.length > 5 && migration_details.currentPhase < 3){
-          return true;
-        }else{
-          return false;
-        }
-      }
-    );}
+    // if(typeof(migrationList) !== 'undefined'){
+    // return this.migrationListenerService.FetchMigrationProgress(migrationList).subscribe(
+    //   resp => {
+    //     var migration_details: MigrationProgressModel = resp;
+    //     if(migration_details.phaseResults.length > 5 && migration_details.currentPhase < 3){
+    //       return true;
+    //     }else{
+    //       return false;
+    //     }
+    //   }
+    // );}
+    return true;
   }
 
   hasStartedMigration(app_id, service_id, partition_id){
