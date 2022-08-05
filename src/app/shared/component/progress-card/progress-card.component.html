@@ -142,7 +142,7 @@
 
 
                     <div class="progress1-button" style="color: white;">
-                      <div *ngIf="modeOfMigration(app.app_id, service.service_id, partition.partition_id) &&  ShowInvokeDowntime(partition.migEndpoint)"><button
+                      <div *ngIf="modeOfMigration(app.app_id, service.service_id, partition.partition_id) && partition.showInvokeDowntime"><button
                           type="button" class="progress-card-button btn btn-info " (click)="InvokeDowntime(partition.migEndpoint)">Invoke Downtime</button>
                         <p> </p>
                       </div>

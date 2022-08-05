@@ -62,7 +62,6 @@ export class APIurls{
     }
 
     getStartMigraitonUrl(MigrationEndpoint: string){
-        console.log(MigrationEndpoint);
         return MigrationEndpoint + this.startMigration_rt;
     }
 

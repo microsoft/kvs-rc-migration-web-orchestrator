@@ -49,6 +49,7 @@ export class ProgressCardComponent {
   AllMigEndpoints: allMigrationEndpoints[];
   hasPartitionID: boolean = false;
   f: boolean = false;
+  cnt_phase: number;
 
 
   constructor(private partitionService: PartitionsService,
@@ -133,26 +134,30 @@ export class ProgressCardComponent {
     )
   }
 
-  updateGlobalPartitions(ServiceId: string, partitionId: string, MigrationListener: string, curr_progress: string[], migration_details: MigrationProgressModel){
+  updateGlobalPartitions(ServiceId: string, partitionId: string, MigrationListener: string, curr_progress: string[], migration_details: MigrationProgressModel, cnt_phase: number){
     this.selectedServices.AllMigEndpoints.find((obj, i) => {
       if(obj.app_id === this.selectedServices.listServices[ServiceId]){
         this.selectedServices.AllMigEndpoints[i].service_details.find((obj1, i1) => {
           if(obj1.service_id === ServiceId){
             if(!(this.selectedServices.AllMigEndpoints[i].service_details[i1].partition_details.some(obj2 => obj2.partition_id === partitionId))){
+              
               this.selectedServices.AllMigEndpoints[i].service_details[i1].partition_details.push({
                 partition_id: partitionId,
                 migEndpoint: MigrationListener,
                 selected: false,
                 progress: curr_progress,
-                migration_details: migration_details
+                migration_details: migration_details,
+                showInvokeDowntime: cnt_phase > 4 && migration_details.currentPhase>=1 && migration_details.currentPhase <=3? true: false
               });
             }else{
               this.selectedServices.AllMigEndpoints[i].service_details[i1].partition_details.find((obj2, i2)=> {
                 if(obj2.partition_id === partitionId){
                   this.selectedServices.AllMigEndpoints[i].service_details[i1].partition_details[i2].progress = curr_progress;
                   if(MigrationListener!=='' && MigrationListener!=='undefined') {
-                    this.selectedServices.AllMigEndpoints[i].service_details[i1].partition_details[i2].migEndpoint = MigrationListener;}
+                    this.selectedServices.AllMigEndpoints[i].service_details[i1].partition_details[i2].migEndpoint = MigrationListener;
+                  }
                   this.selectedServices.AllMigEndpoints[i].service_details[i1].partition_details[i2].migration_details = migration_details;
+                  this.selectedServices.AllMigEndpoints[i].service_details[i1].partition_details[i2].showInvokeDowntime = cnt_phase > 4 && migration_details.currentPhase>=1 && migration_details.currentPhase <=3? true: false
 
                 }
               })
@@ -183,12 +188,12 @@ export class ProgressCardComponent {
           
           if ( typeof(this.migrationEndpoint) !== 'undefined'){
             this.migrationEndpoint = this.migrationEndpoint;
-            progress = this.fetchMigrationProgress(this.migrationEndpoint);
+            this.cnt_phase = this.fetchMigrationProgress(this.migrationEndpoint);
           }else{
             this.migrationEndpoint='';
           }
           // update the global variable to store the partitions of the given service
-          this.updateGlobalPartitions(this.serviceID, PartitionId, this.migrationEndpoint, this.partition_curr_progress, this.migrationProgressDetails);
+          this.updateGlobalPartitions(this.serviceID, PartitionId, this.migrationEndpoint, this.partition_curr_progress, this.migrationProgressDetails, this.cnt_phase);
 
         }
 
@@ -217,8 +222,9 @@ export class ProgressCardComponent {
         this.partition_curr_progress = [];
         var progress = ['idle', 'idle', 'idle', 'idle'];
 
-        
+        this.cnt_phase = 0;
           for(var item in migrationProgress.phaseResults){
+            this.cnt_phase ++;
               var phase = migrationProgress.phaseResults[item].phase;
               var status = migrationProgress.phaseResults[item].status;
               if (phase !== 4)progress[phase-1] = Constants.STATUS[status];
@@ -235,6 +241,7 @@ export class ProgressCardComponent {
       }
     )
     }
+    return this.cnt_phase;
   }
 
   AbortMigration(migrationEndpoint: string){
@@ -292,21 +299,7 @@ export class ProgressCardComponent {
     })
     return f;
   }
-  ShowInvokeDowntime(migrationList: string){
-    this.f = false;
-    // if(typeof(migrationList) !== 'undefined'){
-    // return this.migrationListenerService.FetchMigrationProgress(migrationList).subscribe(
-    //   resp => {
-    //     var migration_details: MigrationProgressModel = resp;
-    //     if(migration_details.phaseResults.length > 5 && migration_details.currentPhase < 3){
-    //       return true;
-    //     }else{
-    //       return false;
-    //     }
-    //   }
-    // );}
-    return true;
-  }
+
 
   hasStartedMigration(app_id, service_id, partition_id){
     this.f = false;

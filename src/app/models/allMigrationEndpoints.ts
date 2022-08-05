@@ -19,4 +19,5 @@ export interface partition_details{
     progress: string[],
     migration_details: MigrationProgressModel,
     selected: boolean
+    showInvokeDowntime: boolean
 };

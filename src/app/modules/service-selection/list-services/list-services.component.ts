@@ -152,7 +152,8 @@ export class ListServicesComponent implements OnInit {
                 migEndpoint: MigrationListener,
                 selected: false,
                 progress: [],
-                migration_details: migrationdummy
+                migration_details: migrationdummy,
+                showInvokeDowntime: false
               });
             } 
           }
@@ -211,7 +212,6 @@ export class ListServicesComponent implements OnInit {
           
       }
   });
-  console.warn(this.checked);
   return this.checked;
 
 }
