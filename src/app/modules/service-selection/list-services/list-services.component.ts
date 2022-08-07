@@ -161,7 +161,6 @@ export class ListServicesComponent implements OnInit {
       }
     })
     this.allMigrationListener = this.selectedServices.AllMigEndpoints;
-    console.log(this.selectedServices.AllMigEndpoints);
   }
 
   // collect the migration listener endpoint from the getInstance response
@@ -255,7 +254,6 @@ export class ListServicesComponent implements OnInit {
           return true; // stop searching
       }
   });
-  console.log(this.selectedServices.AllMigEndpoints);
 
 
     
