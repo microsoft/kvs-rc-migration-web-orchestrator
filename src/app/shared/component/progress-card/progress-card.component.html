@@ -9,7 +9,7 @@
 
           <div class="list-partitions" *ngIf="modeOfMigrationManual(app.app_id, service.service_id)">
             <div class="" style="display: inline-block;">
-              <p class="title" style="text-decoration:underline; font-weight: 550;"> List of Partitions: </p>
+              <p class="title" style="text-decoration:underline; font-weight: 550;"> List of Partitions pending for migration: </p>
               <button class="collapse-button" (click)="toggleList()">
                 <mat-icon>arrow_drop_down</mat-icon>
               </button>
@@ -34,9 +34,8 @@
             </div>
           </div>
 
-
-
-
+          <div style= "border-top: black 14px solid; margin-top: 16px; width: 105%; left: -20px; position: relative;" *ngIf="modeOfMigrationManual(app.app_id, service.service_id)">
+          </div>
 
 
 
