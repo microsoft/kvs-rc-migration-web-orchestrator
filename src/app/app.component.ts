@@ -137,10 +137,10 @@ export class AppComponent implements OnInit {
       if (app.app_id === app_id) {
           let service1 = this.SelectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
             if(service.service_id === service_id){
-              let partition1 = this.SelectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
+              
                 
-                  checked = checked || this.SelectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected;
-              })
+                  checked = this.SelectedServices.AllMigEndpoints[index1].service_details[index2].isSelected;
+              
             }
           }) 
           

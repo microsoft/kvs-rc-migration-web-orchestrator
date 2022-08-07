@@ -111,7 +111,8 @@ export class ListServicesComponent implements OnInit {
           this.selectedServices.AllMigEndpoints[i].service_details.push({
               service_id: service.Id,
               service_name: service.Name,
-              partition_details: []
+              partition_details: [],
+              isSelected: false
             })
           }
           return true;
@@ -128,7 +129,6 @@ export class ListServicesComponent implements OnInit {
         for(var item in partition.Items){
           var partitionid: string = partition.Items[item].PartitionInformation.Id;
           this.getAllInstances(partitionid, ServiceId);
-          this.checkSelectedServices(this.listServices[ServiceId], ServiceId);
         }
         //this.setPartitions();
    
@@ -244,12 +244,9 @@ export class ListServicesComponent implements OnInit {
       if (app.app_id === app_id) {
           let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
             if(service.service_id === service_id){
+              this.selectedServices.AllMigEndpoints[index1].service_details[index2].isSelected = true;
               let partition1 = this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
-                  if(partition.migration_details.migrationMode === 1){
                     this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected = false;
-                  }else{
-                    this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected = true;
-                  }
                   
                 
               })
@@ -258,6 +255,7 @@ export class ListServicesComponent implements OnInit {
           return true; // stop searching
       }
   });
+  console.log(this.selectedServices.AllMigEndpoints);
 
 
     

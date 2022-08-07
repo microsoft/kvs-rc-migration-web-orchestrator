@@ -11,6 +11,7 @@ export interface service_details{
     service_id: string,
     service_name: string,
     partition_details: partition_details[]
+    isSelected:  boolean
 };
 
 export interface partition_details{
