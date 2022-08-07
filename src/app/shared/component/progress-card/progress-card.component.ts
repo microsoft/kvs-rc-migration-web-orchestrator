@@ -34,7 +34,7 @@ export class ProgressCardComponent {
 
   // partition id
   partitionID: string;
-  
+  hasStartedMig: boolean;
 
 
   // show abort only when migration is not complete
@@ -73,7 +73,7 @@ export class ProgressCardComponent {
     // fetch the partitions progress after each given interval 
     setInterval(() => {
       this.getAllPartitions(this.serviceID);
-    }, 3000);
+    }, 2000);
   }
 
   
@@ -166,7 +166,6 @@ export class ProgressCardComponent {
         })
       }
     })
-    //console.warn(this.selectedServices.AllMigEndpoints);
   }
 
   // collect the migration listener endpoint from the getInstance response
@@ -197,7 +196,7 @@ export class ProgressCardComponent {
 
         }
 
-      }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+      }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
     )              
   }
 
@@ -302,15 +301,15 @@ export class ProgressCardComponent {
 
 
   hasStartedMigration(app_id, service_id, partition_id){
-    this.f = false;
+    this.hasStartedMig = false;
     this.selectedServices.AllMigEndpoints.find((app, app_ind) => {
           if(app_id === app.app_id){ 
           this.selectedServices.AllMigEndpoints[app_ind].service_details.find((service, service_ind) =>{
           if(service_id === service.service_id){
             this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details.find((partition, partition_ind) => {
               if(partition_id === partition.partition_id){
-                if(partition.migration_details.currentPhase === 0){
-                  this.f = true;
+                if(partition.migration_details.currentPhase > 0){
+                  this.hasStartedMig = true;
                 }
               }
             })
@@ -318,7 +317,7 @@ export class ProgressCardComponent {
         })
       }
     })
-    return this.f;
+    return this.hasStartedMig;
 
   }
   modeOfMigration(app_id: string, service_id: string, partition_id: string){
@@ -333,13 +332,32 @@ export class ProgressCardComponent {
                 if(typeof(partition.migration_details.migrationMode) === 'undefined' || partition.migration_details.migrationMode === 0){
                   f = false;
                 }
+                if(partition.migration_details.migrationMode === 0){
+                  this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details[partition_ind].selected = true;
+                }
               }
             })
           }
         })
       }
     })
+
     return f;
+  }
+  updateSelectedPartitions(app_id, service_id){
+    this.selectedServices.AllMigEndpoints.find((app, app_ind) => {
+      
+      if(app_id === app.app_id){ 
+          this.selectedServices.AllMigEndpoints[app_ind].service_details.find((service, service_ind) =>{
+          if(service_id === service.service_id){
+            this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details.find((partition, partition_ind) => {
+              partition.selected = true;
+            })
+          }
+        })
+      }
+    })
+
   }
   modeOfMigrationManual(app_id: string, service_id: string){
     var f: boolean = true;
@@ -352,7 +370,9 @@ export class ProgressCardComponent {
               
                 if(typeof(partition.migration_details.migrationMode ) === 'undefined' || partition.migration_details.migrationMode === 0){
                   f = false;
-        
+                  if(partition.migration_details.migrationMode === 0){
+                    this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details[partition_ind].selected = true;
+                  }
               }
             })
           }
@@ -367,6 +387,55 @@ export class ProgressCardComponent {
   toggleList(){
     this.showPartitions = !this.showPartitions;
   }
+
+  startSelectedMigration(){
+    this.selectedServices.AllMigEndpoints.find((app, app_ind) => {
+      
+      if(this.applicationID === app.app_id){ 
+          this.selectedServices.AllMigEndpoints[app_ind].service_details.find((service, service_ind) =>{
+          if(this.serviceID === service.service_id){
+            this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details.find((partition, partition_ind) => {
+              if(partition.selected === true){
+                this.StartMigration(partition.migEndpoint);
+              }
+            })
+          }
+        })
+      }
+    })
+  }
+  selectAllPartitions(){
+    this.selectedServices.AllMigEndpoints.find((app, app_ind) => {
+      
+      if(this.applicationID === app.app_id){ 
+          this.selectedServices.AllMigEndpoints[app_ind].service_details.find((service, service_ind) =>{
+          if(this.serviceID === service.service_id){
+            this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details.find((partition, partition_ind) => {
+              partition.selected = true;
+            })
+          }
+        })
+      }
+    })
+
+  }
+
+  abortAll(){
+    this.selectedServices.AllMigEndpoints.find((app, app_ind) => {
+      
+      if(this.applicationID === app.app_id){ 
+          this.selectedServices.AllMigEndpoints[app_ind].service_details.find((service, service_ind) =>{
+          if(this.serviceID === service.service_id){
+            this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details.find((partition, partition_ind) => {
+              this.AbortMigration(partition.migEndpoint);
+            })
+          }
+        })
+      }
+    })
+
+  }
+
 
 }
 

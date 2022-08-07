@@ -1,11 +1,11 @@
 <div class="" style="color: white;">
-
-
-
-
     <div class="" *ngFor="let app of AllMigEndpoints">
       <div class="" *ngFor="let service of app.service_details">
         <div class="" *ngIf="app.app_id == applicationID && service.service_id == serviceID ">
+          <span style="display: flex;flex-direction: row;align-items: flex-start; margin-bottom: 10px;">
+            <h5 style="text-decoration: underline;">{{app.app_id}}: {{service.service_id}}</h5>
+            <button class="progress-card-button btn btn-info" (click)="abortAll()" style="width: max-content; right: 18px; position: absolute;"> Abort all</button>
+          </span>
 
           <div class="list-partitions" *ngIf="modeOfMigrationManual(app.app_id, service.service_id)">
             <div class="" style="display: inline-block;">
@@ -26,9 +26,9 @@
                 </div>
               </div>
               <div class="text-center pt-3">
-                <button type="button" class="progress-card-button btn btn-info " style="width: 25%; margin: 4px;">Select
+                <button type="button" class="progress-card-button btn btn-info " style="width: 25%; margin: 4px;" (click)="selectAllPartitions()">Select
                   All Partitions</button>
-                <button type="button" class="progress-card-button btn btn-info " style="width: 40%; margin: 4px;">Start
+                <button type="button" class="progress-card-button btn btn-info " style="width: 40%; margin: 4px;" (click)="startSelectedMigration()">Start
                   Migration</button>
               </div>
             </div>
@@ -40,7 +40,7 @@
 
 
           <div class="" *ngFor="let partition of service.partition_details;">
-            <div class="" *ngIf="partition.selected">
+            <div class="" *ngIf="hasStartedMigration(app.app_id, service.service_id, partition.partition_id) === true">
 
               <div class="progress-card">
                 <div class="row1">
