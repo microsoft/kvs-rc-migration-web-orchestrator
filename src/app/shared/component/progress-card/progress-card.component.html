@@ -3,22 +3,29 @@
       <div class="" *ngFor="let service of app.service_details">
         <div class="" *ngIf="app.app_id == applicationID && service.service_id == serviceID ">
           <span style="display: flex;flex-direction: row;align-items: flex-start; margin-bottom: 10px;">
-            <h5 style="text-decoration: underline;">{{app.app_id}}: {{service.service_id}}</h5>
+            <h5 style="text-decoration: underline;">{{app.app_id}}: {{service.service_name}}</h5>
             <button class="progress-card-button btn btn-info" (click)="abortAll()" style="width: max-content; right: 18px; position: absolute;"> Abort all</button>
           </span>
 
           <div class="list-partitions" *ngIf="modeOfMigrationManual(app.app_id, service.service_id)">
             <div class="" style="display: inline-block;">
-              <p class="title" style="text-decoration:underline; font-weight: 550;"> List of Partitions pending for migration: </p>
+              <p class="title" style="text-decoration:underline; font-weight: 550;"> List of Partitions: </p>
               <button class="collapse-button" (click)="toggleList()">
                 <mat-icon>arrow_drop_down</mat-icon>
               </button>
             </div>
             <div class="partitions" *ngIf="showPartitions">
+              <label>
+                <input type="checkbox"
+                  value="Select all partitions"
+                  (click)="selectAllPartitions()"
+                /> Select all partitions
+              </label>
               <div class="" *ngFor="let partition of service.partition_details;">
-                <div class="" *ngIf="hasStartedMigration(app.app_id, service.service_id, partition.partition_id) === false">
+                <div class="">
                   <label>
                     <input type="checkbox" value="{{partition.partition_id}}"
+                      [attr.disabled]="hasStartedMigration(app.app_id, service.service_id, partition.partition_id) === true ? true : null"
                       [checked]="isCheckedPartition(app.app_id, service.service_id, partition.partition_id)"
                       (change)="checkSelectedPartitions(app.app_id, service.service_id, partition.partition_id)" />
                     {{partition.partition_id}}
@@ -26,8 +33,7 @@
                 </div>
               </div>
               <div class="text-center pt-3">
-                <button type="button" class="progress-card-button btn btn-info " style="width: 25%; margin: 4px;" (click)="selectAllPartitions()">Select
-                  All Partitions</button>
+                
                 <button type="button" class="progress-card-button btn btn-info " style="width: 40%; margin: 4px;" (click)="startSelectedMigration()">Start
                   Migration</button>
               </div>

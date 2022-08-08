@@ -411,7 +411,10 @@ export class ProgressCardComponent {
           this.selectedServices.AllMigEndpoints[app_ind].service_details.find((service, service_ind) =>{
           if(this.serviceID === service.service_id){
             this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details.find((partition, partition_ind) => {
-              partition.selected = true;
+              if(this.hasStartedMigration(app.app_id, service.service_id, partition.partition_id) == false){
+                partition.selected = !partition.selected;
+              }
+              
             })
           }
         })
