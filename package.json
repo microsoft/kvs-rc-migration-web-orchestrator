@@ -46,6 +46,7 @@
     "adslot-ui": "^31.0.1",
     "bootstrap": "^5.2.0-beta1",
     "jquery": "^3.6.0",
+    "keywords": "^0.1.2",
     "metro4": "^4.5.1",
     "moment": "^2.29.4",
     "ng-circle-progress": "^1.6.0",
