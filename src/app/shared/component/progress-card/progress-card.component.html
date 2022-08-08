@@ -28,7 +28,7 @@
                       [attr.disabled]="hasStartedMigration(app.app_id, service.service_id, partition.partition_id) === true ? true : null"
                       [checked]="isCheckedPartition(app.app_id, service.service_id, partition.partition_id)"
                       (change)="checkSelectedPartitions(app.app_id, service.service_id, partition.partition_id)" />
-                    {{partition.partition_id}}
+                    <span [style.color]=" hasStartedMigration(app.app_id, service.service_id, partition.partition_id) === true ? '#494949f5' : 'white'">{{partition.partition_id}}</span>
                   </label>
                 </div>
               </div>
