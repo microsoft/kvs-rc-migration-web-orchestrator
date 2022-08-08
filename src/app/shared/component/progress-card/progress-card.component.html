@@ -70,7 +70,7 @@
                         (click)="showOverallProgress = false; showDowntimeProgress=true; showCopyProgress=false; showCatchupProgress = false">
                         <div class="arrow"
                           [ngClass]="{'ongoing': partition.progress[2] == 'ongoing', 'completed': partition.progress[2] == 'completed', 'error': partition.progress[2] == 'error', 'idle': partition.progress[2] == 'idle' }">
-                          <span class="hovertext" data-hover="Show Dwontime phase details">Downtime</span>
+                          <span class="hovertext" data-hover="Show Downtime phase details">Downtime</span>
                         </div>
                       </div>
 
