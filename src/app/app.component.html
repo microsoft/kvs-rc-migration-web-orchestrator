@@ -7,9 +7,13 @@
         </span>
       </div>
       </a>
-    <span style="vertical-align: middle; margin-left: 15px;">
-      KVS-RC Actor state migration viewer
-    </span>
+
+    <a class="navbar-brand navbar-brand-title" [routerLink]="['/']" *ngIf="!hideSFXLogo" >
+      <!-- <img style="width: 32px" src="../assets/logo.png" title="sf" class="navbar-brand-icon"/> -->
+      <span style="vertical-align: middle;" *ngIf="!hideSFXTest">
+        KVS-RC Actor state migration viewer
+      </span>
+    </a>
   
   
   

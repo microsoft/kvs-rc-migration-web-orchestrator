@@ -33,6 +33,7 @@ export class AppComponent implements OnInit {
 
   //public assetBase = environment.assetBase;
   treeWidth = '275px';
+  assetBase = '';
   // preserve the existing size for using
   previousTreeWidth = this.treeWidth;
   refreshRate: number = 2000;
