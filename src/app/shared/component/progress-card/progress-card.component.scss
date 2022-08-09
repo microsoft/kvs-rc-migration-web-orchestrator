@@ -234,6 +234,13 @@ $dashboard-small-padding-horizontal: 12px;
 	height: 400px;
 	vertical-align: middle;
 }
+.wrapper1 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    grid-auto-columns: 300px 300px;
+  }
+  
 
 .nav {
 	margin-top: 40px;
