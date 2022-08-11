@@ -133,13 +133,13 @@ export class AppComponent implements OnInit {
   }
   isCheckedPartition(app_id: string, service_id: string, partition_id: string){
     var checked: boolean = false;
-    let app1 = this.SelectedServices.AllMigEndpoints.find((app, index1) => {
+    let app1 = this.SelectedServices.AllMigEndpoints.find((app, app_index) => {
       if (app.app_id === app_id) {
-          let service1 = this.SelectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
+          let service1 = this.SelectedServices.AllMigEndpoints[app_index].service_details.find((service, service_index) => {
             if(service.service_id === service_id){
-              let partition1 = this.SelectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
+              let partition1 = this.SelectedServices.AllMigEndpoints[app_index].service_details[service_index].partition_details.find((partition, partition_index)=>{
                 if(partition.partition_id === partition_id){
-                  checked= this.SelectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected;
+                  checked= this.SelectedServices.AllMigEndpoints[app_index].service_details[service_index].partition_details[partition_index].selected;
 
                 }
               })
