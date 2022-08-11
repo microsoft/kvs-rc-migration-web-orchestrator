@@ -9,6 +9,6 @@ node --version
 Write-Host "Npm Version :"
 npm -v
 Write-Host "Installing http-server packages : "
-cd $PSScriptRoot\kvs
+cd $PSScriptRoot\kvs-rc-actor-state-migration-viewer
 Write-Host (Get-Location).path
 npm install http-server

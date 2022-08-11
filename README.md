@@ -66,3 +66,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Deploying it on Service Fabric Cluster
 
+* step 1
+
+Perform ng build on the repo and files will be generated in dist/kvs-rc-migration-web-orchestrator.
+Add this folder to FilesForDeployement/Guest1Pkg/Code
