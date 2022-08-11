@@ -1,9 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { RefreshService } from './services/refresh.service';
-import { ActivatedRoute, Route, Router, NavigationEnd} from '@angular/router';
+import { Router, NavigationEnd} from '@angular/router';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { environment } from 'src/environments/environment';
-import { GetMigrationListenerService } from './services/get-migration-listener.service';
 import { SelectedServicesService } from './services/selected-services.service';
 import { ServiceItem } from './models/Service';
 import {filter} from 'rxjs/operators';
@@ -91,7 +89,6 @@ export class AppComponent implements OnInit {
 
   constructor(public refreshService: RefreshService,
               public liveAnnouncer: LiveAnnouncer,
-              public getmigrationListener: GetMigrationListenerService,
               public SelectedServices: SelectedServicesService,
               public router: Router
   ){}

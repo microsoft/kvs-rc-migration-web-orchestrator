@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { PartitionsService } from 'src/app/services/partitions.service';
 import { ActivatedRoute } from '@angular/router';
 import { GetMigrationListenerService } from 'src/app/services/get-migration-listener.service';
 import { Partition } from 'src/app/models/Partition';
@@ -52,8 +51,7 @@ export class ProgressCardComponent {
   cnt_phase: number;
 
 
-  constructor(private partitionService: PartitionsService,
-              private activatedRoute: ActivatedRoute,
+  constructor(private activatedRoute: ActivatedRoute,
               private migrationListenerService: GetMigrationListenerService,
               private selectedServices: SelectedServicesService
               ) { }
