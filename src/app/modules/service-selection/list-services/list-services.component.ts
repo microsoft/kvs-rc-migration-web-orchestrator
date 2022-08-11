@@ -171,17 +171,17 @@ export class ListServicesComponent implements OnInit {
         instance = resp;
         for(var item in instance.Items){
           //this.listInstances[this.instance.Items[item].ReplicaId] = PartitionId;
-          var migrationList = 'undefined';
+          var migrationListener = 'undefined';
           if(instance.Items[item].Address.length > 0){
-            migrationList = this.getMigrationListener(instance.Items[item].Address);  
+            migrationListener = this.getMigrationListener(instance.Items[item].Address);  
           }
-          if ( typeof migrationList !== 'undefined'){
-            this.MigrationListener = migrationList;
+          if ( typeof migrationListener !== 'undefined'){
+            this.MigrationListener = migrationListener;
           }else{
-            migrationList='';
+            migrationListener='';
           }
           // update the global variable to store the partitions of the given service
-          this.updateGlobalPartitions(serviceID, PartitionId, migrationList);
+          this.updateGlobalPartitions(serviceID, PartitionId, migrationListener);
 
         }
 
