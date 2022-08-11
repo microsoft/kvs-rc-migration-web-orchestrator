@@ -4,7 +4,7 @@ import { APIurls } from 'src/app/Common/APIurls';
 import { Constants } from 'src/app/Common/Constants';
 import { allMigrationEndpoints } from 'src/app/models/allMigrationEndpoints';
 import { ApplicationItem, Applications } from 'src/app/models/Application';
-import { Instance } from 'src/app/models/Instance';
+import { instance } from 'src/app/models/Instance';
 import { MigrationProgressModel } from 'src/app/models/MigrationProgress';
 import { Partition, PartitionItem } from 'src/app/models/Partition';
 import { service, ServiceItem } from 'src/app/models/Service';
@@ -33,7 +33,7 @@ export class ListServicesComponent implements OnInit {
   applications : Applications;
   services: service;
   partition: Partition;
-  instance: Instance;
+  instance: instance;
   migrationProgressDetails: MigrationProgressModel;
   checked: boolean = false;
 
@@ -167,7 +167,7 @@ export class ListServicesComponent implements OnInit {
   getAllInstances(PartitionId: string, serviceID: string){
     this.getmigrationListener.getAllInstances(PartitionId).subscribe(
       resp=> {
-        var instance: Instance;
+        var instance: instance;
         instance = resp;
         for(var item in instance.Items){
           //this.listInstances[this.instance.Items[item].ReplicaId] = PartitionId;

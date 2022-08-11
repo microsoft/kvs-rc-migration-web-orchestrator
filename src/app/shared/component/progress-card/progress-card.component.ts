@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GetMigrationListenerService } from 'src/app/services/get-migration-listener.service';
 import { Partition } from 'src/app/models/Partition';
-import { Instance } from 'src/app/models/Instance';
+import { instance } from 'src/app/models/Instance';
 import { MigrationProgressModel } from 'src/app/models/MigrationProgress';
 import { Constants } from 'src/app/Common/Constants';
 import { SelectedServicesService } from 'src/app/services/selected-services.service';
@@ -170,7 +170,7 @@ export class ProgressCardComponent {
   getAllInstances(PartitionId: string){
     this.migrationListenerService.getAllInstances(PartitionId).subscribe(
       resp=> {
-        var instance: Instance;
+        var instance: instance;
         instance = resp;
         var curr_progress = [];
         var progress : any = [];

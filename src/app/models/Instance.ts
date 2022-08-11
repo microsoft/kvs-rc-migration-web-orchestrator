@@ -1,8 +1,8 @@
 
-export interface Instance{
-    Items: InstanceItem[]
+export interface instance{
+    Items: instanceItem[]
 }
-export interface InstanceItem{
+export interface instanceItem{
     ServiceKind: string,
     ReplicaId: string,
     Address: any,
