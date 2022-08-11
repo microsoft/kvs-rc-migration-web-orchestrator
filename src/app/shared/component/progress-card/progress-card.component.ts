@@ -6,7 +6,7 @@ import { instance } from 'src/app/models/Instance';
 import { MigrationProgressModel } from 'src/app/models/MigrationProgress';
 import { Constants } from 'src/app/Common/Constants';
 import { SelectedServicesService } from 'src/app/services/selected-services.service';
-import { allMigrationEndpoints } from 'src/app/models/allMigrationEndpoints';
+import { allMigrationEndpoints, service_details } from 'src/app/models/allMigrationEndpoints';
 
 @Component({
   selector: 'app-progress-card',
@@ -387,19 +387,12 @@ export class ProgressCardComponent {
   }
 
   startSelectedMigration(){
-    this.selectedServices.AllMigEndpoints.find((app, app_ind) => {
-      
-      if(this.applicationID === app.app_id){ 
-          this.selectedServices.AllMigEndpoints[app_ind].service_details.find((service, service_ind) =>{
-          if(this.serviceID === service.service_id){
-            this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details.find((partition, partition_ind) => {
-              if(partition.selected === true && this.hasStartedMigration(app.app_id, service.service_id, partition.partition_id) == false){
-                this.StartMigration(partition.migEndpoint);
-              }
-            })
-          }
-        })
-      }
+    var service: service_details = this.selectedServices.findService(this.applicationID, this.serviceID);
+    if(service === null) return;
+    service.partition_details.find((partition, partition_index)=>{
+      if(partition.selected === true && this.hasStartedMigration(this.applicationID, service.service_id, partition.partition_id) == false){
+          this.StartMigration(partition.migEndpoint);
+        }
     })
   }
   selectAllPartitions(){
@@ -422,17 +415,12 @@ export class ProgressCardComponent {
   }
 
   abortAll(){
-    this.selectedServices.AllMigEndpoints.find((app, app_ind) => {
-      
-      if(this.applicationID === app.app_id){ 
-          this.selectedServices.AllMigEndpoints[app_ind].service_details.find((service, service_ind) =>{
-          if(this.serviceID === service.service_id){
-            this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details.find((partition, partition_ind) => {
-              this.AbortMigration(partition.migEndpoint);
-            })
-          }
-        })
-      }
+    var service: service_details = this.selectedServices.findService(this.applicationID, this.serviceID);
+    if(service === null) return;
+    service.partition_details.find((partition, partition_index)=>{
+      if(partition.selected === true && this.hasStartedMigration(this.applicationID, service.service_id, partition.partition_id) == false){
+          this.AbortMigration(partition.migEndpoint);
+        }
     })
 
   }
