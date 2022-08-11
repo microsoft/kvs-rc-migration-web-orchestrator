@@ -198,22 +198,9 @@ export class ListServicesComponent implements OnInit {
 
   isCheckedService(app_id:string, service_id:string){
     this.checked = false;
-    let app1 = this.selectedServices.AllMigEndpoints.find((app, index1) => {
-      if (app.app_id === app_id) {
-          let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
-            if(service.service_id === service_id){
-              let partition1 = this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
-                  this.checked = this.checked || this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected;
-                  
-              })
-            }
-          }) 
-          
-      }
-  });
-  return this.checked;
-
-}
+    this.checked = this.selectedServices.isCheckedService(service_id, app_id);
+    return this.checked;
+  }
   isCheckedPartition(app_id: string, service_id: string, partition_id: string){
     var checked: boolean = false;
     let app1 = this.selectedServices.AllMigEndpoints.find((app, index1) => {
