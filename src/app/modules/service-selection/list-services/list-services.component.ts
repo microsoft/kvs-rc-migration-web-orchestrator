@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { APIurls } from 'src/app/Common/APIurls';
 import { Constants } from 'src/app/Common/Constants';
-import { allMigrationEndpoints } from 'src/app/models/allMigrationEndpoints';
+import { allMigrationEndpoints, partition_details, service_details } from 'src/app/models/allMigrationEndpoints';
 import { ApplicationItem, Applications } from 'src/app/models/Application';
 import { instance } from 'src/app/models/Instance';
 import { MigrationProgressModel } from 'src/app/models/MigrationProgress';
@@ -203,31 +203,19 @@ export class ListServicesComponent implements OnInit {
     return this.checked;
   }
   isCheckedPartition(app_id: string, service_id: string, partition_id: string){
-    var checked: boolean = false;
-    let app1 = this.selectedServices.AllMigEndpoints.find((app, index1) => {
-      if (app.app_id === app_id) {
-          let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
-            if(service.service_id === service_id){
-              let partition1 = this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
-                if(partition.partition_id === partition_id){
-                  checked= this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected;
-                  return checked;
-                }
-              })
-            }
-          }) 
-          return true; // stop searching
-      }
-  });
-  
-
+    var partition_find: partition_details =  this.selectedServices.findPartition(app_id,service_id,partition_id);
+    if(partition_find !== null){
+      return partition_find.selected;
+    }else{
+      return false;
+    }
   }
 
 
   
   checkSelectedServices(app_id:string, service_id: string){
     var checked: boolean = false;
-    let app1 = this.selectedServices.AllMigEndpoints.find((app, index1) => {
+    this.selectedServices.AllMigEndpoints.find((app, index1) => {
       if (app.app_id === app_id) {
           let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
             if(service.service_id === service_id){
@@ -269,23 +257,13 @@ export class ListServicesComponent implements OnInit {
 
   hasListener(app_id: string, service_id: string): boolean{
     var f: boolean = false;
-    let app1 = this.selectedServices.AllMigEndpoints.find((app, index1) => {
-      if (app.app_id === app_id) {
-          let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
-            if(service.service_id === service_id){
-              let partition1 = this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
-                
-                  if(this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].migEndpoint.length > 1){
-                    f = true;
-                  }
-                  
-                
-              })
-            }
-          }) 
+    var service: service_details = this.selectedServices.findService(app_id, service_id);
+    if(service === null) return false;
+    service.partition_details.find((partition, partition_index) => {
+      if(partition.migEndpoint.length > 1) {
+        f = true;
       }
-    });
-
+    })
     return f;
   }
 

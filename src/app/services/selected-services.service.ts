@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { allMigrationEndpoints } from '../models/allMigrationEndpoints';
+import { allMigrationEndpoints, service_details } from '../models/allMigrationEndpoints';
 import { ServiceItem } from '../models/Service';
 
 @Injectable({
@@ -28,10 +28,7 @@ export class SelectedServicesService {
       if (app.app_id === app_id) {
           let service1 = this.AllMigEndpoints[index1].service_details.find((service, index2) => {
             if(service.service_id === service_id){
-              
-                
-                  checked = this.AllMigEndpoints[index1].service_details[index2].isSelected;
-              
+              checked = this.AllMigEndpoints[index1].service_details[index2].isSelected;
             }
           }) 
           
@@ -39,4 +36,37 @@ export class SelectedServicesService {
    });
    return checked;
   }
+
+  public findPartition(app_id: string, service_id: string, partition_id: string){
+    var partition_ret = null;
+    this.AllMigEndpoints.find((app, app_index) => {
+      if (app.app_id === app_id) {
+          this.AllMigEndpoints[app_index].service_details.find((service, service_index) => {
+            if(service.service_id === service_id){
+              this.AllMigEndpoints[app_index].service_details[service_index].partition_details.find((partition, partition_index)=>{
+                if(partition.partition_id == partition_id){
+                  partition_ret = partition;
+                }
+              })
+            }
+          }) 
+      }
+  });
+  return partition_ret;
+  }
+  public findService(app_id: string, service_id: string){
+    var service_ret: service_details = null;
+    this.AllMigEndpoints.find((app, app_index) => {
+      if (app.app_id === app_id) {
+          this.AllMigEndpoints[app_index].service_details.find((service, service_index) => {
+            if(service.service_id === service_id){
+              service_ret = service;
+            }
+          }) 
+      }
+  });
+  return service_ret;
+
+  }
+
 }
