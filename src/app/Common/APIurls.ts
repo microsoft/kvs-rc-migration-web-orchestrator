@@ -49,12 +49,6 @@ export class APIurls{
     }
 
     getMigrationUrl(MigrationEndpoint: string){
-        // var i = 7
-        // for(var i = 7; i < MigrationEndpoint.length; i++){
-        //     if(MigrationEndpoint[i] == '/')     {break;}
-        // }
-        // var mig = MigrationEndpoint.slice(i);
-       
         return MigrationEndpoint + this.migrationProgressUrl_rt;
     }
     getAbortMigrationUrl(MigrationEndpoint: string){
