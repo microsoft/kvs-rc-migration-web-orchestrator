@@ -87,13 +87,14 @@ export class ListServicesComponent implements OnInit {
         this.services = resp;
         for(var item in this.services.Items){
           var serviceid: string = this.services.Items[item].Id;
+          var serviceItem: ServiceItem = this.services.Items[item];
           this.listServices[serviceid]= ApplicationId;
-          this.allServices.push(this.services.Items[item]);
+          this.allServices.push(serviceItem);
           
           // update the global variable to store the services of the given application
-          this.updateGlobalServices(this.services.Items[item], ApplicationId);
+          this.updateGlobalServices(serviceItem, ApplicationId);
           
-          this.getAllPartitions(this.services.Items[item].Id);
+          this.getAllPartitions(serviceItem.Id);
           
         }
         this.selectedServices.AllServices = this.allServices;
