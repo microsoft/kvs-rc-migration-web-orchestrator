@@ -31,7 +31,15 @@ export class ProgressCardComponent  {
   cnt_phase: number = 0;
   showAbort: boolean = false;
 
-  
+  ngOnInit(){
+    
+    setInterval(() => {
+      console.log(
+        "logging"
+      )
+      this.getAllInstances(this.partition.partition_id);
+    }, 2000);
+  }
 
 
 
@@ -39,7 +47,19 @@ export class ProgressCardComponent  {
   constructor(private selectedServices: SelectedServicesService,
               private migrationListenerService: GetMigrationListenerService
               
-              ) { }
+              ) { 
+                this.showOverallProgress  =  true;
+                this.showCopyProgress = false;
+                this.showCatchupProgress = false;
+                this.showDowntimeProgress = false;
+                this.showStart = false;
+                this.showPartitions = false;
+
+                this.migrationEndpoint = '';
+                this.partition_curr_progress = [];
+                this.cnt_phase = 0;
+                this.showAbort = false;
+              }
 
 
   modeOfMigration(app_id: string, service_id: string, partition_id: string){
@@ -144,6 +164,7 @@ export class ProgressCardComponent  {
     )              
   }
   updateGlobalPartitions(ServiceId: string, partitionId: string, MigrationListener: string, curr_progress: string[], migration_details: MigrationProgressModel, cnt_phase: number){
+    console.log("updating...");
     this.selectedServices.AllMigEndpoints.find((obj, i) => {
       if(obj.app_id === this.selectedServices.listServices[ServiceId]){
         this.selectedServices.AllMigEndpoints[i].service_details.find((obj1, i1) => {
@@ -175,6 +196,7 @@ export class ProgressCardComponent  {
         })
       }
     })
+    
   }
 
   getMigrationListener(Endpoints: string){

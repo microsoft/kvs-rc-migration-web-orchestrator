@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GetMigrationListenerService } from 'src/app/services/get-migration-listener.service';
 import { Partition } from 'src/app/models/Partition';
@@ -12,7 +12,7 @@ import { allMigrationEndpoints, service_details } from 'src/app/models/allMigrat
   templateUrl: './migration-view.component.html',
   styleUrls: ['./migration-view.component.scss']
 })
-export class MigrationViewComponent {
+export class MigrationViewComponent implements OnInit {
     // show/ hide progress details
     showOverallProgress: boolean =  true;
     showCopyProgress: boolean = false;
@@ -66,11 +66,9 @@ export class MigrationViewComponent {
   
       
      
-      
-      // fetch the partitions progress after each given interval 
       setInterval(() => {
         this.getAllPartitions(this.serviceID);
-      }, 2000);
+      }, 6000);
     }
   
     
