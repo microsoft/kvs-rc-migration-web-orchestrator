@@ -34,9 +34,7 @@ export class ProgressCardComponent  {
   ngOnInit(){
     
     setInterval(() => {
-      console.log(
-        "logging"
-      )
+      
       this.getAllInstances(this.partition.partition_id);
     }, 2000);
   }
@@ -164,9 +162,9 @@ export class ProgressCardComponent  {
     )              
   }
   updateGlobalPartitions(ServiceId: string, partitionId: string, MigrationListener: string, curr_progress: string[], migration_details: MigrationProgressModel, cnt_phase: number){
-    console.log("updating...");
+
     this.selectedServices.AllMigEndpoints.find((obj, i) => {
-      if(obj.app_id === this.selectedServices.listServices[ServiceId]){
+      if(obj.app_id === this.selectedServices.mapServices[ServiceId]){
         this.selectedServices.AllMigEndpoints[i].service_details.find((obj1, i1) => {
           if(obj1.service_id === ServiceId){
             if(!(this.selectedServices.AllMigEndpoints[i].service_details[i1].partition_details.some(obj2 => obj2.partition_id === partitionId))){
