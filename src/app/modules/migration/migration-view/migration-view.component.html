@@ -1,0 +1,66 @@
+<div class="" style="color: white;">
+    <div class="" *ngFor="let app of AllMigEndpoints">
+      <div class="" *ngFor="let service of app.service_details">
+        <div class="" *ngIf="app.app_id == applicationID && service.service_id == serviceID ">
+          <span style="display: flex;flex-direction: row;align-items: flex-start; margin-bottom: 10px;">
+            <h5 style="text-decoration: underline;">{{app.app_id}}: {{service.service_name}}</h5>
+            <button class="progress-card-button btn btn-info" (click)="abortAll()" style="width: max-content; right: 18px; position: absolute;"> Abort all</button>
+          </span>
+
+          <div class="list-partitions" *ngIf="modeOfMigrationManual(app.app_id, service.service_id)">
+            <div class="" style="display: inline-block;">
+              <p class="title" style="text-decoration:underline; font-weight: 550;"> List of Partitions: </p>
+              <button class="collapse-button" (click)="toggleList()">
+                <mat-icon>arrow_drop_down</mat-icon>
+              </button>
+            </div>
+            <div class="partitions" *ngIf="showPartitions">
+              <label>
+                <input type="checkbox"
+                  value="Select all partitions"
+                  (click)="selectAllPartitions()"
+                /> Select all partitions
+              </label>
+              <div class="" *ngFor="let partition of service.partition_details;">
+                <div class="">
+                  <label>
+                    <input type="checkbox" value="{{partition.partition_id}}"
+                      [attr.disabled]="hasStartedMigration(app.app_id, service.service_id, partition.partition_id) === true ? true : null"
+                      [checked]="isCheckedPartition(app.app_id, service.service_id, partition.partition_id)"
+                      (change)="checkSelectedPartitions(app.app_id, service.service_id, partition.partition_id)" />
+                    <span [style.color]=" hasStartedMigration(app.app_id, service.service_id, partition.partition_id) === true ? '#494949f5' : 'white'">{{partition.partition_id}}</span>
+                  </label>
+                </div>
+              </div>
+              <div class="text-center pt-3">
+                
+                <button type="button" class="progress-card-button btn btn-info " style="width: 40%; margin: 4px;" (click)="startSelectedMigration()">Start
+                  Migration</button>
+              </div>
+            </div>
+          </div>
+
+          <div style= "border-top: black 14px solid; margin-top: 16px; width: 105%; left: -20px; position: relative;" *ngIf="modeOfMigrationManual(app.app_id, service.service_id)">
+          </div>
+
+
+          <div class="wrapper1">
+          <div class="" *ngFor="let partition of service.partition_details;">
+            <div class="" *ngIf="hasStartedMigration(app.app_id, service.service_id, partition.partition_id) === true">
+
+              <div class="" *ngIf="app.app_id == applicationID && service.service_id == serviceID">
+                
+                  <app-progress-card [service]="service" [partition]="partition" [app]="app"></app-progress-card>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+
+</div>

@@ -1,0 +1,89 @@
+<div>
+  <header class="header-bar">
+    <a href="https://aka.ms/portalsfx" target="_blank" tabindex="0" sfx-tree-set-focus selected="true" *ngIf="!hideAzure">
+      <div class="navbar-brand navbar-brand-azure">
+        <span>
+            Microsoft Azure
+        </span>
+      </div>
+      </a>
+
+    <a class="navbar-brand navbar-brand-title" [routerLink]="['/']" *ngIf="!hideSFXLogo" >
+      <!-- <img style="width: 32px" src="../assets/logo.png" title="sf" class="navbar-brand-icon"/> -->
+      <span style="vertical-align: middle;" *ngIf="!hideSFXTest">
+        KVS-RC Actor state migration viewer
+      </span>
+    </a>
+  
+  
+  
+    <!-- push stuff to align right -->
+    <div style="margin-left: auto;"></div>
+    <div>
+      <!-- <app-refresh-rate [value]="refreshService.refreshRate" (rateChange)="refreshService.updateRefreshInterval($event)"
+                        [refresh]="refreshService.isRefreshing" (forceRefreshed)="attemptForceRefresh()"></app-refresh-rate> -->
+    </div>
+  <!--  -->
+  </header>
+
+  <div>
+    <button *ngIf="smallScreenSize" class="material-icons sidenav-button"
+            (click)="changeSmallScreenSizePanelState()" tabindex="0" [title]="smallScreenLeftPanelWidth === '0px' ? 'Open navigation tree panel' : 'Close navigation tree panel'">
+      menu
+    </button>
+      <div class="left-panel left-bar"  [ngStyle]="{'width': showLeftPane ? '280px' : '0px' }">
+          <nav class="tree-container" [attr.aria-hidden]="smallScreenSize ? smallScreenLeftPanelWidth === '0px' : false" role="navigation">
+            <!-- <app-tree-view (treeResize)="resize($event)" [smallWindowSize]="smallScreenSize"  ></app-tree-view> -->
+
+
+            <div class="services">
+              <button (click)="showAllServices()" [ngClass]="{'selected': showServices}">Services Selected</button>
+              <div *ngIf="showServices==true" class="service">
+                  
+                    <button (click)="showAllServices()" >
+                      <div class="" *ngFor="let app of allMigrationEndpoints">
+                        <div class="" *ngFor="let service of app.service_details">
+                         
+                          <div class="" style="display: inline;" *ngIf="isCheckedService(app.app_id, service.service_id)">
+                            <mat-icon class="arrow-service-list">arrow_right</mat-icon><a style="padding: 6px;" routerLink="services/migration/{{app.app_id}}/{{service.service_id}}"> {{service.service_name}} </a>
+                            <!-- <div class="partitions" *ngFor="let partition of service.partition_details">
+                              <div class="" *ngIf="isCheckedPartition(app.app_id, service.service_id, partition.partition_id)">
+                                <a routerLink="services/migration/{{app.app_id}}/{{service.service_id}}/{{partition.partition_id}}"> {{partition.partition_id}} </a>
+                                
+                              </div>
+                              
+                            </div> -->
+                        </div>
+                        </div>
+                      </div>
+                      
+                    </button>
+
+
+                  
+                  
+
+              </div>
+            </div> 
+
+
+
+          </nav>
+          <div class="slider-bar" appDrag (dragFinish)="resize($event)" *ngIf="!smallScreenSize">
+        </div>
+        <div class="slider-bar" style="cursor: initial;" *ngIf="smallScreenSize"></div>
+    </div>
+    <div [ngStyle]="{'left': showLeftPane ? '280px' : '0px' }" class="right-panel main-content" (click)="smallScreenSize ? resize(0): null" (focusin)="smallScreenSize ? resize(0): null">
+      <main>
+        <div class="view-container" #main>
+          <div class="expander-container" *ngIf="!smallScreenSize">
+            <span class=" expander-icon mif-vertical-align-bottom" [ngClass]="{'flip': treeWidth === '8px'}" placement="right"
+                  [ngbTooltip]="(treeWidth === '8px' ? 'Expand' : 'Close') + ' tree view'"  tooltipClass="styled-tooltip" (click)="collapseSide()"></span>
+          </div>
+          <router-outlet id="view-container" ></router-outlet>
+          
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
