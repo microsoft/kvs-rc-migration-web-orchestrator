@@ -6,10 +6,9 @@ import { AppComponent } from './app.component';
 import { LoginModule } from './modules/login/login.module';
 import { RefreshRateComponent } from './shared/component/refresh-rate/refresh-rate.component';
 import { FormsModule } from '@angular/forms';
-import {MatButtonModule} from '@angular/material/button';
-import { ProgressCardComponent } from './shared/component/progress-card/progress-card.component';
+import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceSelectionModule } from './modules/service-selection/service-selection.module';
@@ -21,8 +20,7 @@ import { MigrationModule } from './modules/migration/migration.module';
 @NgModule({
   declarations: [
     AppComponent,
-    RefreshRateComponent,
-    ProgressCardComponent
+    RefreshRateComponent
 
   ],
   imports: [
