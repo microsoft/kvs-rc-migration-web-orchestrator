@@ -9,13 +9,13 @@ export class SelectedServicesService {
   public static _instance: SelectedServicesService;
   public AllServices: ServiceItem[];
   public selectedServicesId : string[]; //service ids
-  public listServices: {};
+  public mapServices: {};
   public AllMigEndpoints: allMigrationEndpoints[];
   
   private constructor() {
     this.AllServices = [];
     this.selectedServicesId = [];
-    this.listServices = {};
+    this.mapServices = {};
     this.AllMigEndpoints = [];
    }
 

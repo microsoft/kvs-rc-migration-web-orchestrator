@@ -21,9 +21,9 @@ export class ListServicesComponent implements OnInit {
 
   
   public listApplications: string[] = [];
-  public listServices = {};  // serviceid , appid
-  public listPartitions = {};
-  public listInstances = {};
+  public mapServices = {};  // serviceid , appid
+  public mapPartitions = {};
+  public mapInstances = {};
   public allServices : ServiceItem[] = [];
   public MigrationListener :string ='';
   public checked_Services : selectedServices[] = []; 
@@ -88,7 +88,7 @@ export class ListServicesComponent implements OnInit {
         for(var item in this.services.Items){
           var serviceid: string = this.services.Items[item].Id;
           var serviceItem: ServiceItem = this.services.Items[item];
-          this.listServices[serviceid]= ApplicationId;
+          this.mapServices[serviceid]= ApplicationId;
           this.allServices.push(serviceItem);
           
           // update the global variable to store the services of the given application
@@ -98,7 +98,7 @@ export class ListServicesComponent implements OnInit {
           
         }
         this.selectedServices.AllServices = this.allServices;
-        this.selectedServices.listServices = this.listServices;
+        this.selectedServices.mapServices = this.mapServices;
        
       }
       
@@ -141,7 +141,7 @@ export class ListServicesComponent implements OnInit {
   updateGlobalPartitions(ServiceId: string, partitionId: string, MigrationListener: string){
     var migrationdummy = {} as MigrationProgressModel;
     this.selectedServices.AllMigEndpoints.find((obj, i) => {
-      if(obj.app_id == this.selectedServices.listServices[ServiceId]){
+      if(obj.app_id == this.selectedServices.mapServices[ServiceId]){
         
         this.selectedServices.AllMigEndpoints[i].service_details.find((obj1, i1) => {
           if(obj1.service_id === ServiceId){
@@ -171,7 +171,7 @@ export class ListServicesComponent implements OnInit {
         var instance: instance;
         instance = resp;
         for(var item in instance.Items){
-          //this.listInstances[this.instance.Items[item].ReplicaId] = PartitionId;
+          //this.mapInstances[this.instance.Items[item].ReplicaId] = PartitionId;
           var migrationListener = 'undefined';
           if(instance.Items[item].Address.length > 0){
             migrationListener = this.getMigrationListener(instance.Items[item].Address);  
