@@ -70,3 +70,16 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 Perform ng build on the repo and files will be generated in dist/kvs-rc-migration-web-orchestrator.
 Add this folder to FilesForDeployement/Guest1Pkg/Code
+
+* step 2
+
+Run the following commands in shell: 
+
+    * Copy-ServiceFabricApplicationPackage -ApplicationPackagePath '<path to repo>\kvs-rc-migration-web-orchestrator\FilesForDeployement'
+
+    * Register-ServiceFabricApplicationType -ApplicationPathInImageStore FilesForDeployement
+
+    * New-ServiceFabricApplication -ApplicationName fabric:/Application3 -ApplicationTypeName Application3Type -ApplicationTypeVersion 1.0.0
+
+
+Now this application will be visible in service fabric cluster with endpoint. 
