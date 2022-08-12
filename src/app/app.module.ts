@@ -10,10 +10,11 @@ import {MatButtonModule} from '@angular/material/button';
 import { ProgressCardComponent } from './shared/component/progress-card/progress-card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatStepperModule} from '@angular/material/stepper';
-import { CommonModule } from '@angular/common';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceSelectionModule } from './modules/service-selection/service-selection.module';
-import {MatIconModule} from '@angular/material/icon'
+import { MatIconModule} from '@angular/material/icon'
+import { MigrationModule } from './modules/migration/migration.module';
 
 
 //import { SidebarComponent } from './shared/component/sidebar/sidebar.component';
@@ -36,15 +37,18 @@ import {MatIconModule} from '@angular/material/icon'
     CommonModule,
     HttpClientModule,
     ServiceSelectionModule,
-    MatIconModule
+    MatIconModule,
+    MigrationModule
   ],
   exports: [
     MatButtonModule,
     MatStepperModule,
     CommonModule
   ],
-  providers: [
-  ],
+  providers: [{
+    provide: LocationStrategy, 
+    useClass: HashLocationStrategy
+  }],
   bootstrap: [AppComponent],
 
 })
